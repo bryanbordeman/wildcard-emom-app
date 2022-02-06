@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-class Wildcard extends Component {
+class WOrkoutListPage extends Component {
+    state = {  } 
     render() { 
         return (
             <div>
-                <h1>Card</h1>
+                
             </div>
         );
     }
 }
  
-export default Wildcard;
+export default WOrkoutListPage;

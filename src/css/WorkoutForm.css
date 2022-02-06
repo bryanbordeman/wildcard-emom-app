@@ -1,0 +1,32 @@
+.WorkoutForm{
+    display: grid;
+}
+
+.WorkoutForm-min {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.WorkoutForm-max {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.WorkoutForm-min .WorkoutForm-max {
+    display: grid;
+    grid-auto-flow: column;
+}
+.WorkoutForm-min button{
+    width: 30px;
+}
+
+.WorkoutForm-max button{
+    width: 30px;
+}
+
+
+.WorkoutForm-min-max-container{
+    display: grid;
+    grid-auto-flow: column;
+    margin: 10px;
+}

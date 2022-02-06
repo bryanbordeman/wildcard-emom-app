@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import beep from './beep.mp3'
-import finalBeep from './final-beep.mp3'
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import './Timer.css'
+import beep from '../audio/beep.mp3'
+import finalBeep from '../audio/final-beep.mp3'
+import Button from '@material-ui/core/Button';
+import '../css/Timer.css'
 
 class Timer extends Component {
     constructor(props){
@@ -22,6 +21,7 @@ class Timer extends Component {
     }
     componentDidMount(){
         clearInterval(this.timer)
+        
     }
     startTimer(){
         this.setState({isRunning: true})
@@ -90,10 +90,10 @@ class Timer extends Component {
             <div className='Timer'>
                 <h1>Round {displayRounds} of {totalRounds}</h1>
                 <h1 style={{color: isFinalCountdown? 'red':''}}>{displayTimer}</h1>
-                <div><CircularProgress color={isFinalCountdown? "error":"primary"} variant="determinate" value={time * this.props.time}/></div>
-                <Button variant="contained" style={{display: isRunning? 'none':''}} onClick={this.startTimer}>Start Timer</Button>
-                <Button variant="contained"style={{display: isRunning && rounds > 0? '':'none'}} onClick={this.stopTimer}>Pause Timer</Button>
-                <Button variant="contained" onClick={this.resetTimer}>Reset Timer</Button>
+                {/* <div><CircularProgress color={isFinalCountdown? "error":"primary"} variant="determinate" value={time * this.props.time}/></div> */}
+                <Button variant="outlined" style={{display: isRunning? 'none':''}} onClick={this.startTimer}>Start</Button>
+                <Button variant="outlined" style={{display: isRunning && rounds > 0? '':'none'}} onClick={this.stopTimer}>Pause</Button>
+                <Button variant="outlined" onClick={this.resetTimer}>Reset</Button>
             </div>
         );
     }
