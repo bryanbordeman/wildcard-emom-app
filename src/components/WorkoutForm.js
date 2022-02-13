@@ -4,13 +4,14 @@ import workoutList from '../js/workoutList'
 
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import SelectWorkout from './SelectWorkout' 
 
 class WorkoutForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            min:0, 
-            max:0, 
+            // min:0, 
+            // max:0, 
             movement:'', 
             category: Object.keys(workoutList)[0], 
             movementList: Object.values(workoutList)[0],
@@ -95,7 +96,8 @@ class WorkoutForm extends Component {
         // ))
         return (
             <form className='WorkoutForm'>
-                <div>
+                <SelectWorkout/>
+                {/* <div>
                 <h1>{movement}</h1>
                     <label htmlFor="category">Choose Workout Category: </label>
                     <Select value={ category } name='category' onChange={ this.handleCategoryChange }>
@@ -108,8 +110,8 @@ class WorkoutForm extends Component {
                         {movementMenu}
                     </Select>
                     <button>Add</button>
-                </div>
-                <div className='WorkoutForm-min-max-container'>
+                </div> */}
+                {/* <div className='WorkoutForm-min-max-container'>
                     <div className='WorkoutForm-min'>
                         <button onClick={this.addMin}>+</button>
                         <button onClick={this.subtractMin}>-</button>
@@ -120,7 +122,7 @@ class WorkoutForm extends Component {
                         <button onClick={this.subtractMax}>-</button>
                         <span>{`  ${max}`}</span>
                     </div>
-                </div>
+                </div> */}
             </form>
         );
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Timer from './Timer';
 import WorkoutForm from './WorkoutForm';
-// import WorkoutList from './WorkoutList';
+
 
 
 class Wildcard extends Component {
