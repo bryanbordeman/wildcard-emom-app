@@ -11,6 +11,11 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 
 class SelectWorkout extends Component {
     constructor(props){
@@ -31,6 +36,9 @@ class SelectWorkout extends Component {
         this.handleClose = this.handleClose.bind(this)
         this.add = this.add.bind(this)
         this.subtract = this.subtract.bind(this)
+        this.handleAddWorkout = this.handleAddWorkout.bind(this)
+        this.handleClear = this.handleClear.bind(this)
+        this.validateInput = this.validateInput.bind(this)
     }
     componentDidMount(){
         this.updateMovementMenu(this.state.category)
@@ -55,18 +63,16 @@ class SelectWorkout extends Component {
         event.preventDefault();
         const { name, value } = event.target;
         let newNum = Number(value) + 1
-        console.log(name, value)
         this.setState({[name]: newNum})
-        
     }
 
     subtract(event){
         event.preventDefault();
         const { name, value } = event.target;
-        let newNum = Number(value) - 1
-        console.log(name, value)
-        this.setState({[name]: newNum})
-        
+        if (value > 0){
+            let newNum = Number(value) - 1
+            this.setState({[name]: newNum})
+        }
     }
 
     handleClickOpen = () => {
@@ -76,9 +82,33 @@ class SelectWorkout extends Component {
     handleClose = (event, reason) => {
         if (reason !== 'backdropClick') {
             this.setState({open: false})
-        }
+        } 
+        this.setState({open: false})
     };
 
+    handleAddWorkout(){
+        let { movement, min, max } = this.state
+        let workout = [movement, min, max]
+        this.props.addWorkout(workout)
+        this.handleClear()
+        this.handleClose()
+    }
+
+    handleClear(){
+        this.setState({
+            open: false,
+            category: Object.keys(workoutList)[0],
+            movement: '',
+            movementList: Object.values(workoutList)[0],
+            categoryList: Object.keys(workoutList),
+            min:0, 
+            max:0
+        })
+    }
+
+    validateInput(){
+
+    }
 
     render() { 
         const { movementList, categoryList, open, category, movement, max, min } = this.state
@@ -86,12 +116,20 @@ class SelectWorkout extends Component {
             <MenuItem value={category} key={category}>{category}</MenuItem>
         ));
         const movementMenu = movementList.map(movements => (
-            <MenuItem value={movements}>{movements}</MenuItem>
+            <MenuItem value={movements} key={movements}>{movements}</MenuItem>
         ));
+        const Item = styled(Paper)(({ theme }) => ({
+            ...theme.typography.body2,
+            padding: theme.spacing(1),
+            textAlign: 'center',
+            boxShadow: 'none',
+            color: theme.palette.text.secondary,
+        }));
+        
         return (
         <div>
             <Button onClick={this.handleClickOpen}>Select Workout</Button>
-            <Dialog disableEscapeKeyDown open={open} onClose={this.handleClose}>
+            <Dialog open={open} onClose={this.handleClose}>
                 <DialogTitle>Select Workout</DialogTitle>
                 <DialogContent>
                 <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -122,38 +160,53 @@ class SelectWorkout extends Component {
                     </Select>
                     </FormControl>
                 </Box>
-                <div className='WorkoutForm-min-max-container'>
-                    <div className='WorkoutForm-min'>
-                        <button 
-                            onClick={this.add} 
-                            name='min'
-                            value={min}
-                            >+</button>
-                        <button 
-                            onClick={this.subtract} 
-                            name='min'
-                            value={min}
-                            >-</button>
-                        <span>{`  ${min}`}</span>
-                    </div>
-                    <div className='WorkoutForm-max'>
-                        <button 
-                            onClick={this.add} 
-                            name='max'
-                            value={max}
-                            >+</button>
-                        <button 
-                            onClick={this.subtract} 
-                            name='max'
-                            value={max}
-                            >-</button>
-                        <span>{`  ${max}`}</span>
-                    </div>
-                </div>
+                <Stack 
+                    direction="row" 
+                    spacing={2}
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Item>
+                        <Typography variant="caption" display="block" gutterBottom>
+                            Minimum Reps
+                        </Typography>
+                        <ButtonGroup size="small" aria-label="small outlined button group">
+                            <Button 
+                                onClick={this.add}
+                                name='min'
+                                value={min}
+                            >+</Button>
+                            <Button disabled>{min}</Button>
+                            <Button 
+                                onClick={this.subtract}
+                                name='min'
+                                value={min}
+                            >-</Button>
+                        </ButtonGroup>
+                    </Item>
+                    <Item>
+                        <Typography variant="caption" display="block" gutterBottom>
+                            Maximum Reps
+                        </Typography>
+                        <ButtonGroup size="small" aria-label="small outlined button group">
+                            <Button 
+                                onClick={this.add}
+                                name='max'
+                                value={max}
+                            >+</Button>
+                            <Button disabled>{max}</Button>
+                            <Button 
+                                onClick={this.subtract}
+                                name='max'
+                                value={max}
+                            >-</Button>
+                        </ButtonGroup>
+                    </Item>
+                </Stack>
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={this.handleClose}>Cancel</Button>
-                <Button onClick={this.handleClose}>Ok</Button>
+                <Button onClick={this.handleAddWorkout}>Add</Button>
                 </DialogActions>
             </Dialog>
         </div>);

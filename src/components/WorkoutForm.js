@@ -1,131 +1,88 @@
 import React, { Component } from 'react';
 import '../css/WorkoutForm.css'
-import workoutList from '../js/workoutList'
-
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import SelectWorkout from './SelectWorkout' 
+import { styled } from '@mui/material/styles';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 class WorkoutForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            // min:0, 
-            // max:0, 
-            movement:'', 
-            category: Object.keys(workoutList)[0], 
-            movementList: Object.values(workoutList)[0],
-            categoryList: Object.keys(workoutList)}
+            workouts: [], 
+            dense: false, 
+            secondary: false}
 
-        this.handleChange = this.handleChange.bind(this)
-        this.addMin = this.addMin.bind(this)
-        this.subtractMin = this.subtractMin.bind(this)
-        this.addMax = this.addMax.bind(this)
-        this.subtractMax = this.subtractMax.bind(this)
-        this.handleCategoryChange = this.handleCategoryChange.bind(this)
-        this.handleMovementChange = this.handleMovementChange.bind(this)
-        
+        this.addWorkout = this.addWorkout.bind(this)
+        this.deleteWorkout = this.deleteWorkout.bind(this)
     }
 
-    componentDidMount(){
-        this.updateMovementMenu(this.state.category)
-      
-    }
-
-    handleSubmit(evt) {
-        evt.preventDefault();
-        this.props.addItem(this.state);
-        this.setState({ name: "", qty: "" });
-      }
-    handleChange(evt) {
+    addWorkout(workout){
         this.setState({
-        [evt.target.name]: evt.target.value
-        });
+            workouts: [...this.state.workouts, workout]
+        })
     }
 
-    addMin(e){
-        e.preventDefault(); 
-        let newMin = this.state.min + 1
-        this.setState({min: newMin})
-    }
-    subtractMin(e){
-        e.preventDefault();
-        if(this.state.min > 0){
-        let newMin = this.state.min - 1
-        this.setState({min: newMin})
-        }
+    deleteWorkout(){
+        console.log('Delete Workout')
     }
 
-    addMax(e){
-        e.preventDefault(); 
-        let newMax = this.state.max + 1
-        this.setState({max: newMax})
-    }
-    subtractMax(e){
-        e.preventDefault();
-        if(this.state.max > 0){
-        let newMax = this.state.max - 1
-        this.setState({max: newMax})
-        }
-    }
-
-    handleCategoryChange(e){
-        this.updateMovementMenu(e.target.value)
-        this.setState({ category: e.target.value });
-    }
-    updateMovementMenu(category){
-        const list = workoutList[category]
-        this.setState({ movementList: list })
-    }
-    handleMovementChange(e){
-        this.setState({ movement: e.target.value})
-    }
-    
     render() { 
-        const {min, max, movement, category, movementList} = this.state
-        
-        const categoryMenu = Object.keys(workoutList).map(category => (
-            <MenuItem value={category}>{category}</MenuItem>
-        ))
-        const movementMenu = movementList.map(movements => (
-            <MenuItem value={movements}>{movements}</MenuItem>
-        ))
+        const { workouts, dense, secondary  } = this.state
+        const Demo = styled('div')(({ theme }) => ({
+            backgroundColor: theme.palette.background.paper,
+          }));
 
-        // const movementList = workoutList[category].map(movements => (
-        //     <MenuItem value={movements}>{movements}</MenuItem>
-        // ))
+        const workoutList = workouts.map(workout => (
+            <ListItem key={workout[0]}
+                secondaryAction={
+                    <IconButton onClick={this.deleteWorkout} edge="end" aria-label="delete">
+                    <DeleteIcon />
+                    </IconButton>
+                }
+                >
+                <ListItemAvatar>
+                    <Avatar>
+                    <FitnessCenterIcon />
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                    primary={workout[0]}
+                    secondary={`Min: ${workout[1]} Max: ${workout[2]}`}
+                />
+            </ListItem>
+        ))
         return (
-            <form className='WorkoutForm'>
-                <SelectWorkout/>
-                {/* <div>
-                <h1>{movement}</h1>
-                    <label htmlFor="category">Choose Workout Category: </label>
-                    <Select value={ category } name='category' onChange={ this.handleCategoryChange }>
-                        {categoryMenu}
-                    </Select>
+            <div>
+                <SelectWorkout 
+                    addWorkout={this.addWorkout}
+                />
 
-                    <label htmlFor="movement">Choose Workout Category: </label>
 
-                    <Select value={ movement } name='movement' onChange={ this.handleMovementChange }>
-                        {movementMenu}
-                    </Select>
-                    <button>Add</button>
-                </div> */}
-                {/* <div className='WorkoutForm-min-max-container'>
-                    <div className='WorkoutForm-min'>
-                        <button onClick={this.addMin}>+</button>
-                        <button onClick={this.subtractMin}>-</button>
-                        <span>{`  ${min}`}</span>
-                    </div>
-                    <div className='WorkoutForm-max'>
-                        <button onClick={this.addMax}>+</button>
-                        <button onClick={this.subtractMax}>-</button>
-                        <span>{`  ${max}`}</span>
-                    </div>
-                </div> */}
-            </form>
+                <Grid item xs={12} md={6}>
+                    <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                        Workout List
+                    </Typography>
+                    <Demo>
+                        <List dense={dense}>
+                            {workoutList}
+                        </List>
+                    </Demo>
+                    </Grid>
+
+
+            </div>
         );
     }
 }
- 
+
 export default WorkoutForm;
