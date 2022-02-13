@@ -128,7 +128,9 @@ class SelectWorkout extends Component {
         
         return (
         <div>
-            <Button onClick={this.handleClickOpen}>Select Workout</Button>
+            <Box sx={{ margin: 2 }}>
+                <Button onClick={this.handleClickOpen}>Select Workout</Button>
+            </Box>
             <Dialog open={open} onClose={this.handleClose}>
                 <DialogTitle>Select Workout</DialogTitle>
                 <DialogContent>
