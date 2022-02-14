@@ -19,8 +19,7 @@ class WorkoutForm extends Component {
         super(props);
         this.state = {
             workouts: [], 
-            dense: false, 
-            secondary: false}
+        }
 
         this.addWorkout = this.addWorkout.bind(this)
         this.deleteWorkout = this.deleteWorkout.bind(this)
@@ -32,8 +31,10 @@ class WorkoutForm extends Component {
         })
     }
 
-    deleteWorkout(){
-        console.log('Delete Workout')
+    deleteWorkout(workout){
+        this.setState((prevState) => ({
+            workouts: prevState.workouts.filter(w => w[0] !== workout),
+        }))
     }
 
     render() { 
@@ -60,7 +61,7 @@ class WorkoutForm extends Component {
                 <Grid item xs zeroMinWidth>
                     <ListItem key={workout[0]}
                         secondaryAction={
-                            <IconButton onClick={this.deleteWorkout} edge="end" aria-label="delete">
+                            <IconButton onClick={ () => this.deleteWorkout(workout[0]) } edge="end" aria-label="delete">
                             <DeleteIcon />
                             </IconButton>
                         }
