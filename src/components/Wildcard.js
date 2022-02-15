@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Timer from './Timer';
 import WorkoutForm from './WorkoutForm';
 import NavBar from './NavBar'
-import Header from './Header';
+import ResponsiveAppBar from './ResponsiveAppBar';
 
 
 class Wildcard extends Component {
@@ -14,7 +14,7 @@ class Wildcard extends Component {
         return (
             <div>
                 {/* <Timer time={10} totalRounds={10}/> */}
-                <Header/>
+                <ResponsiveAppBar/>
                 <WorkoutForm/>
                 {/* <WorkoutList/> */}
                 <NavBar/>

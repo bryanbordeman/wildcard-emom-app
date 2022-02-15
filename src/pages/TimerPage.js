@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
+import Timer from '../components/Timer';
 
-class WOrkoutListPage extends Component {
-    state = {  } 
+class TimerPage extends Component {
     render() { 
         return (
             <div>
-                
+                <Timer/>
             </div>
         );
     }
 }
  
-export default WOrkoutListPage;
+export default TimerPage;

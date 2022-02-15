@@ -84,7 +84,7 @@ class WorkoutForm extends Component {
         return (
             <div>
                 <SelectWorkout 
-                    addWorkout={this.addWorkout}
+                    addWorkout={this.addWorkout} workoutList={workouts}
                 />
                 <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3 }}>
                     {workoutList}

@@ -107,7 +107,8 @@ class SelectWorkout extends Component {
     }
 
     validateInput(){
-
+        // check to see if movement is already in this.props.workoutList
+        // check if max is higher than min
     }
 
     render() { 

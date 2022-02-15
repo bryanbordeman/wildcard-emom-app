@@ -19,7 +19,7 @@ const styles = {
     },
 }
 
-class Header extends Component {
+class SmallHeader extends Component {
     
     render() { 
         const { classes } = this.props;
@@ -32,4 +32,4 @@ class Header extends Component {
     }
 }
  
-export default withStyles(styles)(Header);
+export default withStyles(styles)(SmallHeader);
