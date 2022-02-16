@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import WorkoutForm from '../components/WorkoutForm';
+import NavBar from '../components/NavBar'
 
 
-class MovementPage extends Component {
+class WorkoutPage extends Component {
     constructor(props){
         super(props);
         this.state = {data:{}}
@@ -20,10 +22,11 @@ class MovementPage extends Component {
     render() { 
         return (
         <div>
-            
+            <WorkoutForm/>
+            <NavBar/>
          </div>
         );
     }
 }
  
-export default MovementPage;
+export default WorkoutPage;

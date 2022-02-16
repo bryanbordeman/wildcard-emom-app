@@ -14,10 +14,10 @@ class Wildcard extends Component {
         return (
             <div>
                 {/* <Timer time={10} totalRounds={10}/> */}
-                <ResponsiveAppBar/>
-                <WorkoutForm/>
+                {/* <ResponsiveAppBar/> */}
+                {/* <WorkoutForm/> */}
                 {/* <WorkoutList/> */}
-                <NavBar/>
+                {/* <NavBar/> */}
             </div>
         );
     }

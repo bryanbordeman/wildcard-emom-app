@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import Timer from '../components/Timer';
 import NavBar from '../components/NavBar'
 
-class TimerPage extends Component {
+class Home extends Component {
+    
     render() { 
         return (
             <div>
-                <Timer/>
+                <h1>HOME</h1>
                 <NavBar/>
             </div>
         );
     }
 }
  
-export default TimerPage;
+export default Home;
