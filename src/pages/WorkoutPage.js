@@ -21,10 +21,10 @@ class WorkoutPage extends Component {
     //  }
     render() { 
         return (
-        <div>
-            <WorkoutForm/>
-            <NavBar/>
-         </div>
+            <div className='App'>
+                <WorkoutForm/>
+                <NavBar/>
+            </div>
         );
     }
 }

@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import logo from '../images/logo.png'
 
 
+
 const pages = ['Home', 'Timer', 'Workouts'];
 
 const ResponsiveAppBar = () => {
