@@ -6,55 +6,52 @@ import { Paper } from '@mui/material';
 import TimerIcon from '@mui/icons-material/Timer';
 import HomeIcon from '@mui/icons-material/Home';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-import {Link, withRouter} from 'react-router-dom';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import { LinkBehavior as RouterLink } from '../components/LinkBehavior'
+
 
 
 class NavBar extends Component {
     constructor(props){
         super(props)
-        this.state ={value: 0, path: ''}
+        this.state ={value: 0}
         this.handleChange = this.handleChange.bind(this)
 
     }
 
-    componentDidMount(){
-        const pathname = window.location.pathname;
-        this.setState({path : pathname})
-    }
     handleChange(event, newValue) {
-        event.preventDefault()
-        const pathArray = ['/', '/timer', 'workout']
-        // this.props.history.push({  pathname: `${pathArray[newValue]}`})
-        this.setState({value: newValue, path: pathArray[newValue]});
-        
+        // event.preventDefault()
+        this.setState({value: newValue});
     };
 
     render() { 
-        
+        const { value } = this.state
         return (
             <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
                 <Box>
-                    
                     <BottomNavigation
                         showLabels
-                        value={this.state.value}
-                        onChange={this.handleChange}
+                        value={ value }
+                        onChange={ this.handleChange }
                         >
                         <BottomNavigationAction 
                         label="Home" 
                         icon={<HomeIcon />} 
-                        // component={ Link }
-                        // to={'/'}
+                        component={ RouterLink }
+                        href={'/'}
                         />
                         <BottomNavigationAction 
                         label="Timer" 
                         icon={<TimerIcon />}
-                        // component={ Link }
+                        component={ RouterLink }
+                        href={'/timer'}
                         
                         />
                         <BottomNavigationAction 
                         label="Workout" 
-                        icon={<AddToPhotosIcon />} 
+                        icon={<FitnessCenterIcon />} 
+                        component={ RouterLink }
+                        href={'/workout'}
                         />
                     </BottomNavigation>
                 </Box>
@@ -63,4 +60,4 @@ class NavBar extends Component {
     }        
 }
  
-export default withRouter(NavBar);
+export default NavBar;

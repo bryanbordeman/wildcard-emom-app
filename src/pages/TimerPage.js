@@ -8,7 +8,8 @@ class TimerPage extends Component {
         return (
             <div className='App'>
                 {/* <ResponsiveAppBar/> */}
-                <Timer/>
+                {/* <Timer/> */}
+                <h1>Timer</h1>
                 <NavBar/>
             </div>
         );

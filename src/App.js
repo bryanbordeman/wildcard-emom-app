@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './css/App.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blue, lightBlue } from '@mui/material/colors';
-import Routes from './components/Routes';
+import MainRoutes from './components/MainRoutes';
 
 
 const wildcardTheme = createTheme({
@@ -20,8 +20,9 @@ class App extends Component {
   render() { 
     return (
       <ThemeProvider theme={wildcardTheme}>
-        <Routes/>
+        
         <div className='App'>
+        <MainRoutes/>
         </div>
       </ThemeProvider>
     );

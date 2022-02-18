@@ -22,7 +22,8 @@ class WorkoutPage extends Component {
     render() { 
         return (
             <div className='App'>
-                <WorkoutForm/>
+                {/* <WorkoutForm/> */}
+                <h1>WORKOUT</h1>
                 <NavBar/>
             </div>
         );
