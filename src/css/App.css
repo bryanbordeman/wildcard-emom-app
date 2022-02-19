@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  position: relative;
 }
 
 .App-logo {
@@ -24,3 +25,7 @@
   color: #61dafb;
 }
 
+.Page {
+  text-align: center;
+  margin-top: 200px;
+}

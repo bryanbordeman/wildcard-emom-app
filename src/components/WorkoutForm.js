@@ -87,13 +87,13 @@ class WorkoutForm extends Component {
                 <SelectWorkout 
                     addWorkout={this.addWorkout} workoutList={workouts}
                 />
-                <Card sx={{ minWidth: 275 }}>
+                {workoutList.length > 0 && <Card sx={{ minWidth: 275 }}>
                     <CardContent>
                         <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3 }}>
                             {workoutList}
                         </Box>
                     </CardContent>
-                </Card>
+                </Card>}
             </div>
         );
     }

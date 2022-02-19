@@ -5,11 +5,9 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { Paper } from '@mui/material';
 import TimerIcon from '@mui/icons-material/Timer';
 import HomeIcon from '@mui/icons-material/Home';
-import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+// import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import { LinkBehavior as RouterLink } from '../components/LinkBehavior'
-
-
+import { Link as RouterLink } from 'react-router-dom';
 
 class NavBar extends Component {
     constructor(props){
@@ -20,7 +18,6 @@ class NavBar extends Component {
     }
 
     handleChange(event, newValue) {
-        // event.preventDefault()
         this.setState({value: newValue});
     };
 
@@ -38,20 +35,20 @@ class NavBar extends Component {
                         label="Home" 
                         icon={<HomeIcon />} 
                         component={ RouterLink }
-                        href={'/'}
+                        to={'/'}
                         />
                         <BottomNavigationAction 
                         label="Timer" 
                         icon={<TimerIcon />}
                         component={ RouterLink }
-                        href={'/timer'}
+                        to={'/timer'}
                         
                         />
                         <BottomNavigationAction 
                         label="Workout" 
                         icon={<FitnessCenterIcon />} 
                         component={ RouterLink }
-                        href={'/workout'}
+                        to={'/workout'}
                         />
                     </BottomNavigation>
                 </Box>

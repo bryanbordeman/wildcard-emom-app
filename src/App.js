@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './css/App.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blue, lightBlue } from '@mui/material/colors';
-import MainRoutes from './components/MainRoutes';
-
+import WildcardAppBar from './components/WildcardAppBar';
+import NavBar from './components/NavBar';
+import Box from '@mui/material/Box'
 
 const wildcardTheme = createTheme({
   palette: {
@@ -17,14 +18,37 @@ const wildcardTheme = createTheme({
 
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      windowDimension: null
+    }
+    this.handleResize = this.handleResize.bind(this)
+  }
+
+  componentDidMount(){
+    this.handleResize()
+  }
+
+  componentDidUpdate(){
+    window.addEventListener("resize", this.handleResize);
+    return () => window.removeEventListener("resize", this.handleResize);
+  
+  }
+  
+
+  handleResize(){
+    this.setState({windowDimension: window.innerWidth})
+  }
   render() { 
+    const isMobile = this.state.windowDimension <= 640;
     return (
-      <ThemeProvider theme={wildcardTheme}>
-        
-        <div className='App'>
-        <MainRoutes/>
-        </div>
-      </ThemeProvider>
+      // <div className='App'>
+        <ThemeProvider theme={wildcardTheme}>
+            {!isMobile && <WildcardAppBar position="absolute" />}
+            {isMobile && <NavBar/>}
+        </ThemeProvider>
+      // </div>
     );
   }
 }

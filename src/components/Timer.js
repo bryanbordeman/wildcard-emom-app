@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import beep from '../audio/beep.mp3'
 import finalBeep from '../audio/final-beep.mp3'
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import '../css/Timer.css'
 
 class Timer extends Component {

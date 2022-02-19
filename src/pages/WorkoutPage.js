@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import WorkoutForm from '../components/WorkoutForm';
-import NavBar from '../components/NavBar'
+import Page from '../components/Page'
 
 
 class WorkoutPage extends Component {
@@ -21,11 +21,10 @@ class WorkoutPage extends Component {
     //  }
     render() { 
         return (
-            <div className='App'>
-                {/* <WorkoutForm/> */}
+            <Page>
+                <WorkoutForm/>
                 <h1>WORKOUT</h1>
-                <NavBar/>
-            </div>
+            </Page>
         );
     }
 }
