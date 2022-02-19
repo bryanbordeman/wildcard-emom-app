@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import beep from '../audio/beep.mp3'
 import finalBeep from '../audio/final-beep.mp3'
-import Button from '@mui/material/Button';
 import '../css/Timer.css'
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import PauseCircleOutlineRoundedIcon from '@mui/icons-material/PauseCircleOutlineRounded';
+import {CircularProgressbar, buildStyles} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import Typography from '@mui/material/Typography';
+
+
 
 class Timer extends Component {
     constructor(props){
@@ -12,7 +22,10 @@ class Timer extends Component {
             rounds: this.props.totalRounds,
             round: 1,
             isRunning: false,
-            isFinalCountdown: false
+            isFinalCountdown: false,
+            remainingTime : 0,
+            timerColor: '#009EE1',
+            workout: 'Burpee'
         }
         this.startTimer = this.startTimer.bind(this)
         this.countDown = this.countDown.bind(this)
@@ -37,9 +50,6 @@ class Timer extends Component {
         new Audio(finalBeep).play()
     }
     countDown(){
-        
-
-
         if (this.state.time === 0 && this.state.rounds > 0){
             let newRound = this.state.round + 1
             let newRounds = this.state.rounds - 1
@@ -57,8 +67,14 @@ class Timer extends Component {
             if (this.state.time <= 3){
                 this.setState({isFinalCountdown: true})
             }
-            if(this.state.isFinalCountdown && this.state.time > 0){this.beep()}
-            if(this.state.time === 0){this.finalBeep()}
+            if(this.state.isFinalCountdown && this.state.time > 0){
+                this.beep()
+                this.setState({timerColor: "#0071C4" })
+            }
+            if(this.state.time === 0){
+                this.finalBeep()
+                this.setState({timerColor: "#009EE1" })
+            }
         } else {
             clearInterval(this.timer)
         }
@@ -82,18 +98,117 @@ class Timer extends Component {
         )
     }
     render() { 
-        const {isRunning, round, rounds, time, isFinalCountdown} = this.state;
+        const {isRunning, round, rounds, time, workout} = this.state;
         const {totalRounds} = this.props;
         let displayRounds = <span>{round > totalRounds? totalRounds : round}</span>
-        let displayTimer = <span>{`${time}`.length > 1? time : `0${time}`}</span>
+        let displayTimer = `${time}`.length > 1? time : `0${time}`
+        
         return (
-            <div className='Timer'>
-                <h1>Round {displayRounds} of {totalRounds}</h1>
-                <h1 style={{color: isFinalCountdown? 'red':''}}>{displayTimer}</h1>
-                {/* <div><CircularProgress color={isFinalCountdown? "error":"primary"} variant="determinate" value={time * this.props.time}/></div> */}
-                <Button variant="outlined" style={{display: isRunning? 'none':''}} onClick={this.startTimer}>Start</Button>
-                <Button variant="outlined" style={{display: isRunning && rounds > 0? '':'none'}} onClick={this.stopTimer}>Pause</Button>
-                <Button variant="outlined" onClick={this.resetTimer}>Reset</Button>
+            <div >
+                
+                {/* <h1 style={{color: isFinalCountdown? 'red':''}}>{displayTimer}</h1> */}
+                <div style={{ width: "15em" }} className='CircularProgressbar-wrapper'>
+                <CircularProgressbar 
+                    percentage={time} 
+                    text={`${displayTimer}`} 
+                    value={time} 
+                    strokeWidth={12}
+                    maxValue={this.props.time}
+                    // minValue={0}
+                    styles={buildStyles({
+                        // Rotation of path and trail, in number of turns (0-1)
+                    
+                        // transition: 'stroke-dashoffset 0.5s ease 0s',
+                        // Rotate the path
+                        // transform: 'rotate(0.25turn)',
+                        transformOrigin: 'center center',
+                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                        strokeLinecap: 'butt',
+                    
+                        // Text size
+                        textSize: '100%',
+                    
+                        // How long animation takes to go from one percentage to another, in seconds
+                        pathTransitionDuration: 0.5,
+                    
+                        // Can specify path transition in more detail, or remove it entirely
+                        // pathTransition: 'none',
+                        
+                        // Colors
+                        pathColor: `${this.state.timerColor}`,
+                        textColor: `${this.state.timerColor}`,
+                        trailColor: '#d6d6d6',
+                        backgroundColor: '#0071C4',
+                    })}
+                    />
+                </div>
+                <Stack 
+                    spacing={2} 
+                    direction="row"
+                    divider={<Divider orientation="vertical" flexItem />}
+                    justifyContent="center"
+                    >
+                    <Stack
+                        spacing={0} 
+                        justifyContent="center">
+                        <Typography variant="h6">
+                            {displayRounds}
+                        </Typography>
+                        <Typography variant="caption" gutterBottom>
+                            Round
+                        </Typography>
+                    </Stack>
+                    <Stack
+                        spacing={0} 
+                        justifyContent="center">
+                        <Typography variant="h6">
+                            <span>10</span>
+                        </Typography>
+                        <Typography variant="caption" gutterBottom>
+                            Reps
+                        </Typography>
+                    </Stack>
+                </Stack>
+
+                
+                <Divider/>
+                <Typography m={2} variant="h3">
+                    {workout}
+                </Typography>
+                <Divider/>
+                <Stack 
+                    spacing={2} 
+                    direction="row"
+                    divider={<Divider orientation="vertical" flexItem />}
+                    justifyContent="center"
+                    >
+                    {!isRunning && <IconButton 
+                                        className='svg_icons'
+                                        size="large" 
+                                        color='primary' 
+                                        onClick={this.startTimer}
+                                        >
+                                        <PlayCircleOutlineIcon fontSize="inherit"/>
+                                    </IconButton>
+                    }
+                    {isRunning && rounds > 0 && <IconButton 
+                                                    className='svg_icons'
+                                                    size="large" 
+                                                    color='primary' 
+                                                    onClick={this.stopTimer}
+                                                    >
+                                                    <PauseCircleOutlineRoundedIcon fontSize="inherit"/>
+                                                </IconButton>
+                    }
+                    <IconButton 
+                        className='svg_icons'
+                        color='primary' 
+                        size="large" 
+                        onClick={this.resetTimer}
+                        >
+                            <RestartAltIcon fontSize="inherit"/>
+                    </IconButton>
+                </Stack>
             </div>
         );
     }

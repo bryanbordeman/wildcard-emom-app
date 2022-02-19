@@ -2,3 +2,14 @@
     margin: 10px;
 }
 
+.CircularProgressbar-wrapper {
+    
+    margin-left: auto;
+    margin-right: auto;
+    width: 200;
+    height: 200;
+}
+
+.svg_icons {
+    transform: scale(1.8);
+  }

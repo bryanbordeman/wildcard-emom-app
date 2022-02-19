@@ -4,7 +4,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blue, lightBlue } from '@mui/material/colors';
 import WildcardAppBar from './components/WildcardAppBar';
 import NavBar from './components/NavBar';
-import Box from '@mui/material/Box'
 
 const wildcardTheme = createTheme({
   palette: {
@@ -33,7 +32,6 @@ class App extends Component {
   componentDidUpdate(){
     window.addEventListener("resize", this.handleResize);
     return () => window.removeEventListener("resize", this.handleResize);
-  
   }
   
 
