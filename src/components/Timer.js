@@ -11,8 +11,9 @@ import PauseCircleOutlineRoundedIcon from '@mui/icons-material/PauseCircleOutlin
 import {CircularProgressbar, buildStyles} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Typography from '@mui/material/Typography';
+import { randomWorkout } from './randomWorkout'
 
-
+const workoutList = JSON.parse(window.localStorage.getItem("workouts"));
 
 class Timer extends Component {
     constructor(props){
@@ -24,7 +25,7 @@ class Timer extends Component {
             isRunning: false,
             isFinalCountdown: false,
             remainingTime : 0,
-            timerColor: '#009EE1',
+            timerColor: '#0071C4',
             workout: 'Burpee'
         }
         this.startTimer = this.startTimer.bind(this)
@@ -35,6 +36,7 @@ class Timer extends Component {
     componentDidMount(){
         clearInterval(this.timer)
         
+        console.log(randomWorkout(workoutList))
     }
     startTimer(){
         this.setState({isRunning: true})
@@ -55,7 +57,7 @@ class Timer extends Component {
             let newRounds = this.state.rounds - 1
             this.setState({rounds: newRounds, round: newRound})
             if (this.state.rounds > 0){
-                this.setState({time: this.props.time + 1})
+                this.setState({time: this.props.time + 1, workout: randomWorkout(workoutList)})
             }
             clearInterval(this.timer)
             this.setState({isFinalCountdown: false})
@@ -69,11 +71,11 @@ class Timer extends Component {
             }
             if(this.state.isFinalCountdown && this.state.time > 0){
                 this.beep()
-                this.setState({timerColor: "#0071C4" })
+                this.setState({timerColor: "red" })
             }
             if(this.state.time === 0){
                 this.finalBeep()
-                this.setState({timerColor: "#009EE1" })
+                this.setState({timerColor: "#0071C4" })
             }
         } else {
             clearInterval(this.timer)
@@ -93,7 +95,8 @@ class Timer extends Component {
                 rounds: this.props.totalRounds,
                 round: 1,
                 isRunning: false,
-                isFinalCountdown: false
+                isFinalCountdown: false,
+                timerColor: "#0071C4" 
             }
         )
     }

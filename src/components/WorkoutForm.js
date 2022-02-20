@@ -19,7 +19,7 @@ class WorkoutForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            workouts: [], 
+            workouts: JSON.parse(window.localStorage.getItem("workouts") || "[]") 
         }
 
         this.addWorkout = this.addWorkout.bind(this)
@@ -29,7 +29,10 @@ class WorkoutForm extends Component {
     addWorkout(workout){
         this.setState({
             workouts: [...this.state.workouts, workout]
-        })
+        });
+
+        window.localStorage.setItem("workouts", JSON.stringify(this.state.workouts));
+
     }
 
     deleteWorkout(workout){

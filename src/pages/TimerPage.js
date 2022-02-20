@@ -6,7 +6,7 @@ class TimerPage extends Component {
     render() { 
         return (
             <Page>
-                <Timer totalRounds={2} time={5}/>
+                <Timer totalRounds={4} time={5}/>
             </Page>
         );
     }
