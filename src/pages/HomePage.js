@@ -11,7 +11,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 class Home extends Component {
     constructor(props){
         super(props);
-        this.state = {rounds: 1}
+        this.state = {rounds: JSON.parse(window.localStorage.getItem("rounds"))}
 
         this.add = this.add.bind(this)
         this.subtract = this.subtract.bind(this)
@@ -21,7 +21,10 @@ class Home extends Component {
         event.preventDefault();
         const { name, value } = event.target;
         let newNum = Number(value) + 1
-        this.setState({[name]: newNum})
+        this.setState({[name]: newNum},
+            () => {
+                localStorage.setItem("rounds", JSON.stringify(this.state.rounds));
+            })
     }
 
     subtract(event){
@@ -29,7 +32,10 @@ class Home extends Component {
         const { name, value } = event.target;
         if (value > 1){
             let newNum = Number(value) - 1
-            this.setState({[name]: newNum})
+            this.setState({[name]: newNum},
+                () => {
+                    localStorage.setItem("rounds", JSON.stringify(this.state.rounds));
+                })
         }
     }
     

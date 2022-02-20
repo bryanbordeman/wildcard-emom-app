@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blue, lightBlue } from '@mui/material/colors';
 import WildcardAppBar from './components/WildcardAppBar';
 import NavBar from './components/NavBar';
+import Header from './components/Header';
 
 const wildcardTheme = createTheme({
   palette: {
@@ -44,6 +45,7 @@ class App extends Component {
       // <div className='App'>
         <ThemeProvider theme={wildcardTheme}>
             {!isMobile && <WildcardAppBar position="absolute" />}
+            {isMobile && <Header/>}
             {isMobile && <NavBar/>}
         </ThemeProvider>
       // </div>

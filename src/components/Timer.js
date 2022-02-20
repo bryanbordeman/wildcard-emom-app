@@ -20,13 +20,13 @@ class Timer extends Component {
         super(props);
         this.state = {
             time: this.props.time,
-            rounds: this.props.totalRounds,
-            round: 1,
+            rounds: JSON.parse(window.localStorage.getItem("rounds")),
             isRunning: false,
             isFinalCountdown: false,
             remainingTime : 0,
             timerColor: '#0071C4',
-            workout: 'Burpee'
+            workout: '',
+            reps: ''
         }
         this.startTimer = this.startTimer.bind(this)
         this.countDown = this.countDown.bind(this)
@@ -35,8 +35,11 @@ class Timer extends Component {
     }
     componentDidMount(){
         clearInterval(this.timer)
-        
-        console.log(randomWorkout(workoutList))
+        let newWorkout = randomWorkout(workoutList)
+        this.setState({workout: newWorkout[0], reps: newWorkout.reps})
+    }
+    componentWillUnmount(){
+        clearInterval(this.timer)
     }
     startTimer(){
         this.setState({isRunning: true})
@@ -57,7 +60,8 @@ class Timer extends Component {
             let newRounds = this.state.rounds - 1
             this.setState({rounds: newRounds, round: newRound})
             if (this.state.rounds > 0){
-                this.setState({time: this.props.time + 1, workout: randomWorkout(workoutList)})
+                let newWorkout = randomWorkout(workoutList)
+                this.setState({time: this.props.time + 1, workout: newWorkout[0], reps: newWorkout.reps})
             }
             clearInterval(this.timer)
             this.setState({isFinalCountdown: false})
@@ -89,26 +93,27 @@ class Timer extends Component {
 
     resetTimer(){
         clearInterval(this.timer)
+        let newWorkout = randomWorkout(workoutList)
         this.setState(
             {
                 time: this.props.time,
-                rounds: this.props.totalRounds,
-                round: 1,
+                rounds: JSON.parse(window.localStorage.getItem("rounds")),
                 isRunning: false,
                 isFinalCountdown: false,
-                timerColor: "#0071C4" 
+                timerColor: "#0071C4",
+                workout: newWorkout[0],
+                reps: newWorkout.reps
             }
         )
     }
     render() { 
-        const {isRunning, round, rounds, time, workout} = this.state;
+        const {isRunning, rounds, time, workout, reps} = this.state;
         const {totalRounds} = this.props;
-        let displayRounds = <span>{round > totalRounds? totalRounds : round}</span>
+        let displayRounds = <span>{rounds > totalRounds? totalRounds : rounds}</span>
         let displayTimer = `${time}`.length > 1? time : `0${time}`
         
         return (
-            <div >
-                
+            <div>
                 {/* <h1 style={{color: isFinalCountdown? 'red':''}}>{displayTimer}</h1> */}
                 <div style={{ width: "15em" }} className='CircularProgressbar-wrapper'>
                 <CircularProgressbar 
@@ -158,14 +163,14 @@ class Timer extends Component {
                             {displayRounds}
                         </Typography>
                         <Typography variant="caption" gutterBottom>
-                            Round
+                            Rounds
                         </Typography>
                     </Stack>
                     <Stack
                         spacing={0} 
                         justifyContent="center">
                         <Typography variant="h6">
-                            <span>10</span>
+                            <span>{reps}</span>
                         </Typography>
                         <Typography variant="caption" gutterBottom>
                             Reps
@@ -175,9 +180,14 @@ class Timer extends Component {
 
                 
                 <Divider/>
-                <Typography m={2} variant="h3">
+                <div style={{width: '100%'}}>
+                <Typography sx={{whiteSpace: 'pre-line',
+                                overflow: 'hidden',
+                                textOverflow: 'inherit',
+                                fontSize: '2rem'}} m={2} variant="h3">
                     {workout}
                 </Typography>
+                </div>
                 <Divider/>
                 <Stack 
                     spacing={2} 

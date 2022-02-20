@@ -19,6 +19,7 @@ class NavBar extends Component {
 
     handleChange(event, newValue) {
         this.setState({value: newValue});
+        clearInterval()
     };
 
     render() { 

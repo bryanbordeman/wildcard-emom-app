@@ -29,16 +29,21 @@ class WorkoutForm extends Component {
     addWorkout(workout){
         this.setState({
             workouts: [...this.state.workouts, workout]
+        },
+        () => {
+            localStorage.setItem("workouts", JSON.stringify(this.state.workouts));
         });
-
-        window.localStorage.setItem("workouts", JSON.stringify(this.state.workouts));
-
     }
 
     deleteWorkout(workout){
         this.setState((prevState) => ({
             workouts: prevState.workouts.filter(w => w[0] !== workout),
-        }))
+            
+        }),
+        () => {
+            localStorage.setItem("workouts", JSON.stringify(this.state.workouts));
+        });
+        
     }
 
     render() { 
