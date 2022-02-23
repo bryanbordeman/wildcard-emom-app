@@ -13,14 +13,14 @@ import "react-circular-progressbar/dist/styles.css";
 import Typography from '@mui/material/Typography';
 import { randomWorkout } from './randomWorkout'
 
-const workoutList = JSON.parse(window.localStorage.getItem("workouts"));
+
 
 class Timer extends Component {
     constructor(props){
         super(props);
         this.state = {
             time: this.props.time,
-            rounds: JSON.parse(window.localStorage.getItem("rounds")),
+            rounds: this.props.rounds,
             isRunning: false,
             isFinalCountdown: false,
             remainingTime : 0,
@@ -35,7 +35,7 @@ class Timer extends Component {
     }
     componentDidMount(){
         clearInterval(this.timer)
-        let newWorkout = randomWorkout(workoutList)
+        let newWorkout = randomWorkout(this.props.workouts)
         this.setState({workout: newWorkout[0], reps: newWorkout.reps})
     }
     componentWillUnmount(){
@@ -60,7 +60,7 @@ class Timer extends Component {
             let newRounds = this.state.rounds - 1
             this.setState({rounds: newRounds, round: newRound})
             if (this.state.rounds > 0){
-                let newWorkout = randomWorkout(workoutList)
+                let newWorkout = randomWorkout(this.props.workouts)
                 this.setState({time: this.props.time + 1, workout: newWorkout[0], reps: newWorkout.reps})
             }
             clearInterval(this.timer)
@@ -93,7 +93,7 @@ class Timer extends Component {
 
     resetTimer(){
         clearInterval(this.timer)
-        let newWorkout = randomWorkout(workoutList)
+        let newWorkout = randomWorkout(this.props.workouts)
         this.setState(
             {
                 time: this.props.time,

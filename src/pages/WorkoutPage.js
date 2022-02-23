@@ -12,7 +12,7 @@ class WorkoutPage extends Component {
     render() { 
         return (
             <Page>
-                <WorkoutForm/>
+                <WorkoutForm getWorkouts={this.props.getWorkouts}/>
             </Page>
         );
     }

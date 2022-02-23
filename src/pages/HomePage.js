@@ -11,10 +11,18 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 class Home extends Component {
     constructor(props){
         super(props);
-        this.state = {rounds: JSON.parse(window.localStorage.getItem("rounds"))}
+        this.state = {rounds: 0}
 
         this.add = this.add.bind(this)
         this.subtract = this.subtract.bind(this)
+    }
+
+    componentDidMount(){
+        this.props.getRounds(this.state.rounds)
+        this.setState({rounds: JSON.parse(window.localStorage.getItem("rounds"))})
+    }
+    componentWillUnmount(){
+        localStorage.setItem("rounds", JSON.stringify(this.state.rounds));
     }
 
     add(event){
@@ -23,7 +31,8 @@ class Home extends Component {
         let newNum = Number(value) + 1
         this.setState({[name]: newNum},
             () => {
-                localStorage.setItem("rounds", JSON.stringify(this.state.rounds));
+                this.props.getRounds(this.state.rounds)
+                // localStorage.setItem("rounds", JSON.stringify(this.state.rounds));
             })
     }
 
@@ -34,7 +43,8 @@ class Home extends Component {
             let newNum = Number(value) - 1
             this.setState({[name]: newNum},
                 () => {
-                    localStorage.setItem("rounds", JSON.stringify(this.state.rounds));
+                    this.props.getRounds(this.state.rounds)
+                    // localStorage.setItem("rounds", JSON.stringify(this.state.rounds));
                 })
         }
     }

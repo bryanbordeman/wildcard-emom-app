@@ -26,6 +26,13 @@ class WorkoutForm extends Component {
         this.deleteWorkout = this.deleteWorkout.bind(this)
     }
 
+    componentDidMount(){
+        this.props.getWorkouts(this.state.workouts)
+    }
+    componentWillUnmount(){
+        localStorage.setItem("workouts", JSON.stringify(this.state.workouts));
+    }
+
     addWorkout(workout){
         this.setState({
             workouts: [...this.state.workouts, workout]
@@ -33,6 +40,8 @@ class WorkoutForm extends Component {
         () => {
             localStorage.setItem("workouts", JSON.stringify(this.state.workouts));
         });
+
+        
     }
 
     deleteWorkout(workout){
