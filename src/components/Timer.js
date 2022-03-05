@@ -20,7 +20,7 @@ class Timer extends Component {
         super(props);
         this.state = {
             time: this.props.time,
-            rounds: this.props.rounds,
+            rounds: JSON.parse(window.localStorage.getItem("rounds")),
             isRunning: false,
             isFinalCountdown: false,
             remainingTime : 0,
@@ -33,10 +33,18 @@ class Timer extends Component {
         this.stopTimer = this.stopTimer.bind(this)
         this.resetTimer = this.resetTimer.bind(this)
     }
+    static defaultProps = { 
+        workouts: JSON.parse(window.localStorage.getItem("workouts") || "[]"),
+        rounds: JSON.parse(window.localStorage.getItem("rounds"))}
     componentDidMount(){
         clearInterval(this.timer)
         let newWorkout = randomWorkout(this.props.workouts)
-        this.setState({workout: newWorkout[0], reps: newWorkout.reps})
+        // console.log(newWorkout)
+        if (isNaN(newWorkout)) {
+            return this.setState({workout: newWorkout[0], reps: 0});;
+            }
+            return this.setState({workout: newWorkout[0], reps: newWorkout.reps});
+        // this.setState({workout: newWorkout[0], reps: newWorkout.reps})
     }
     componentWillUnmount(){
         clearInterval(this.timer)

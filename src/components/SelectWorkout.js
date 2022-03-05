@@ -43,6 +43,12 @@ class SelectWorkout extends Component {
     componentDidMount(){
         this.updateMovementMenu(this.state.category)
     }
+    componentDidUpdate(){
+        if (this.state.min >= this.state.max){
+            this.setState({max: this.state.max + 1})
+        }
+        
+    }
 
     handleChange(event){
         const { name, value } = event.target;

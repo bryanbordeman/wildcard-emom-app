@@ -15,6 +15,7 @@ class Home extends Component {
 
         this.add = this.add.bind(this)
         this.subtract = this.subtract.bind(this)
+        this.handleUpdate = this.handleUpdate.bind(this)
     }
 
     componentDidMount(){
@@ -23,6 +24,10 @@ class Home extends Component {
     }
     componentWillUnmount(){
         localStorage.setItem("rounds", JSON.stringify(this.state.rounds));
+    }
+
+    handleUpdate(e){
+        this.context.refresh()
     }
 
     add(event){
@@ -67,6 +72,7 @@ class Home extends Component {
                     size="large"
                     component = {Link}
                     to={'/workout'}
+                    onClick={this.handleUpdate}
                     >
                     Create Workout List
                 </Button>
@@ -105,6 +111,7 @@ class Home extends Component {
                     endIcon={<PlayArrowIcon />}
                     component = {Link}
                     to={'/timer'}
+                    onClick={this.handleUpdate}
                     >
                     Start EMOM
                 </Button>

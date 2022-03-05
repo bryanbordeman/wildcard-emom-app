@@ -17,11 +17,11 @@ class MainRoutes extends Component {
     
     getWorkouts(workouts){
         this.setState({workouts: workouts})
-        console.log(workouts)
+        // console.log(workouts)
     }
     getRounds(rounds){
         this.setState({rounds: rounds})
-        console.log(rounds)
+        // console.log(rounds)
     }
     render() { 
         

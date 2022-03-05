@@ -12,9 +12,13 @@ import { Link as RouterLink } from 'react-router-dom';
 class NavBar extends Component {
     constructor(props){
         super(props)
-        this.state ={value: 0}
+        this.state ={value: '/'}
         this.handleChange = this.handleChange.bind(this)
 
+    }
+    componentDidMount(){
+        const pathname = window.location.pathname;
+        this.setState({value: pathname})
     }
 
     handleChange(event, newValue) {
@@ -34,19 +38,22 @@ class NavBar extends Component {
                         >
                         <BottomNavigationAction 
                         label="Home" 
+                        value='/'
                         icon={<HomeIcon />} 
                         component={ RouterLink }
                         to={'/'}
                         />
                         <BottomNavigationAction 
                         label="Timer" 
+                        value='/timer'
                         icon={<TimerIcon />}
                         component={ RouterLink }
                         to={'/timer'}
                         
                         />
                         <BottomNavigationAction 
-                        label="Workout" 
+                        label="Workout"
+                        value='/workout' 
                         icon={<FitnessCenterIcon />} 
                         component={ RouterLink }
                         to={'/workout'}

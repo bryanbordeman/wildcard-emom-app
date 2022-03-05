@@ -33,6 +33,7 @@ class App extends Component {
   componentDidUpdate(){
     window.addEventListener("resize", this.handleResize);
     return () => window.removeEventListener("resize", this.handleResize);
+  
   }
   
 
